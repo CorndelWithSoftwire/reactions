@@ -1,20 +1,33 @@
-﻿import React, {FunctionComponent} from "react";
+﻿import React, {FunctionComponent, useState} from "react";
 import styles from "./Board.module.scss";
 import {Button} from "../Button/Button";
 
+const buttonPositions = [
+    { x: 150, y: 300 },
+    { x: 150, y: 1000 },
+    { x: 150, y: 1700 },
+    { x: 850, y: 300 },
+    { x: 850, y: 1000 },
+    { x: 850, y: 1700 },
+    { x: 500, y: 650 },
+    { x: 500, y: 1350 },
+]
+
 export const Board: FunctionComponent = () => {
+    const [activeId, setActiveId] = useState(0);
+    
+    const buttonCompleted = () => {
+        const nextButtonId = Math.floor(Math.random() * buttonPositions.length);
+        setActiveId(nextButtonId);
+    }
+    
+    const buttons = buttonPositions.map(({x, y}, index) => 
+        <Button id={index} x={x} y={y} activeId={activeId} onActiveButtonPressed={buttonCompleted}/>
+    );
+    
     return (
         <svg className={styles.board} viewBox="0, 0, 1000, 2000">
-            <Button id={0} x={150} y={300}/>
-            <Button id={1} x={150} y={1000}/>
-            <Button id={2} x={150} y={1700}/>
-
-            <Button id={3} x={850} y={300}/>
-            <Button id={4} x={850} y={1000}/>
-            <Button id={5} x={850} y={1700}/>
-
-            <Button id={6} x={500} y={650}/>
-            <Button id={7} x={500} y={1350}/>
+            {buttons}
         </svg>
     );
 };
