@@ -3,10 +3,17 @@ import styles from "./Game.module.scss";
 import {Board} from "./Board/Board";
 import {ScoreBoard} from "./ScoreBoard/ScoreBoard";
 
-export const Game: FunctionComponent = () => {
+interface GameProps {
+    endGame: () => void;
+}
+
+export const Game: FunctionComponent<GameProps> = ({endGame}) => {
     const [score, setScore] = useState(0);
     
     const incrementScore = () => {
+        if (score >= 90) {
+            endGame();
+        }
         setScore(score + 10);
     }
     
