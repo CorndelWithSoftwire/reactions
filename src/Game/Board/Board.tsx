@@ -13,12 +13,21 @@ const buttonPositions = [
     { x: 500, y: 1350 },
 ]
 
-export const Board: FunctionComponent = () => {
+interface BoardProps {
+    incrementScore: () => void;
+}
+
+export const Board: FunctionComponent<BoardProps> = ({ incrementScore }) => {
     const [activeId, setActiveId] = useState(0);
     
-    const buttonCompleted = () => {
+    const selectNextButton = () => {
         const nextButtonId = Math.floor(Math.random() * buttonPositions.length);
         setActiveId(nextButtonId);
+    }
+    
+    const buttonCompleted = () => {
+        incrementScore();
+        selectNextButton();
     }
     
     const buttons = buttonPositions.map(({x, y}, index) => 
